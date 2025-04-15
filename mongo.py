@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 import gridfs
+import pymupdf as pmf
 
 def mongo_conn():
     try:
@@ -12,6 +13,20 @@ def mongo_conn():
 
 db = mongo_conn()
 file_location = "Designing Data Intensive Applications.pdf"
+
+def put_doc(file):
+    # with open(file_location, "rb") as f:
+    #     data = f.read()
+    #     fs = gridfs.GridFS(db)
+    #     fs.p
+    pdf = pmf.open(stream=file.read(), filetype="pdf")
+    data = file.read()
+    # print(pdf)
+    fs = gridfs.GridFS(db)
+    print(file)
+    fs.put(file, filename = file.name)
+    for file in db.fs.files.find():
+        print(file)
 
 with open(file_location, "rb") as f:
     data = f.read()

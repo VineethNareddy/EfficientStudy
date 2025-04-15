@@ -11,6 +11,7 @@ from langchain.chains import RetrievalQA
 from langchain.llms import OpenAI
 from dotenv import load_dotenv
 from db import insert_user, insert_chatbot, insert_conservations, insert_chatbot_messages, insert_user_messages
+from mongo import mongo_conn, put_doc
 
 def generate_llm_response(file, openai_api_key, question):
 
@@ -33,12 +34,17 @@ def generate_llm_response(file, openai_api_key, question):
 
 
 if __name__ == "__main__":
+	mongo_conn()
 
 	username = st.text_input('Username:', placeholder = 'Please enter your username here')
 	file = st.file_uploader('Upload slides', type='pdf')
 	question = st.text_input('Question:', placeholder = 'Please enter your question here')
 
+	print(file)
+	print()
 	st.info(question)
+	if file is not None:
+		put_doc(file)
 
 	user_id = insert_user(username)
 	chatbot_id = insert_chatbot()
