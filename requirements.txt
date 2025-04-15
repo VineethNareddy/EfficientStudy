@@ -6,3 +6,6 @@ tiktoken
 pymupdf
 python-dotenv
 faiss-cpu
+psycopg2-binary
+pymongo
+gridfs
