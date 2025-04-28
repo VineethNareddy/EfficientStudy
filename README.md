@@ -2,6 +2,8 @@
 
 ### Goal
 
+Our primary goal for this project is to learn how to work with a vector database; we hope to learn both how to interface with the database and how to integrate it into a larger service. More specifically, we plan to learn how to use Facebook AI Similarity Search (FAISS) in combination with LangChain to create a service that allows a user to upload a document and then ask an AI chatbot questions about the contents of that document. The service vectorizes the contents of the document for more efficient retrieval of the relevant information. This tool would find its user base in students who are reviewing longer documents – with it, they can receive specific answers to their questions based on the content that they have already been learning from.
+
 ### Data Preparation and Setup
 
 Database Design:
@@ -11,6 +13,13 @@ Database Design:
 
 We provide an example textbook to use when chatting with the bot ("Designing Data Intensive Applications.pdf")
 
+To populate the database with some sample data, please type `python random_data.py` in the terminal.
+
+![alt text](image-3.png)
+Source: https://medium.com/@ypredofficial/faiss-vector-database-be3a9725172f
+
+Original Architecture Overview (Switch from React to Streamlit not reflected):
+![alt text](image-4.png)
 
 
 ### Application and code
@@ -29,6 +38,7 @@ Below are all libraries in the requirements.txt file along with their importance
 10. `pymongo`: Library to connect to our MongoDB
 11.  `gridfs`: Used to store files in PostgreSQL DB
 12. `requests`: Allows us to send HTTP requests
+13. `random`: Used when creating sample data
 
 Below are some steps to run our application:
 
@@ -39,7 +49,6 @@ Below are some steps to run our application:
 5. Create a .env folder and have the following variables: OpenAI API key (you will have to get this by yourself), HOST (localhost), DATABASE (your database name), USER (your username), PASSWORD (your password)
 6. `streamlit run main.py`: To launch our application. Should take a short time before a user can finally interact with our application.
 7. You have to create a username before you continue using the app. Otherwise, this may cause errors
-8. In addition, your first chat must include a file attached to it. Otherwise, this may also cause errors
 
 Note: It's best if you run this app with the latest version of Python installed. We're not sure of this, but if you don't have the latest version, any version >= 3.12 should work.
 
@@ -52,3 +61,5 @@ Note: It's best if you run this app with the latest version of Python installed.
 ![alt text](image.png)
 ![alt text](image-1.png)
 ![alt text](image-2.png)
+
+Video: https://app.screencastify.com/v3/watch/WE4WJRWGjTE8r5sYcJCI
