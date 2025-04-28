@@ -82,6 +82,13 @@ span, p, label {color:var(--text);}  /* ensure forms stay bright */
 
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
+with st.sidebar:
+    st.image("gtlogo.png", use_container_width=True)
+    pdf_file = st.file_uploader("", type="pdf")
+
+
+    st.markdown("---")
+
 def user_form():
 	with st.form('userform', clear_on_submit=True):
 		load_dotenv()
@@ -118,11 +125,11 @@ if __name__ == "__main__":
 			st.markdown("Conversation " + str(key))
 			for line in pages_map[key]:
 				st.markdown(line[0] + ": " + line[1])
-			st.markdown("______________________________________________")
+			st.markdown("---")
 	
 	convo_pages = []
 	
-	page_to_add = st.Page(convert_to_page, title = "Conversation History")
+	page_to_add = st.Page(convert_to_page, title = "conversation history")
 	convo_pages.insert(0, page_to_add)
 	convo_pages.insert(0, "chatbot_page.py")
 	convo_pages.insert(0, landing)
