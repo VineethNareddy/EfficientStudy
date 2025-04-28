@@ -57,7 +57,7 @@ def insert_chatbot():
 
     return chatbot_id
 
-def insert_conservations(user_id, chat_id):
+def insert_conversation(user_id, chat_id):
     load_dotenv()
     conn = psycopg2.connect(
         host = os.getenv("HOST"),
@@ -128,4 +128,66 @@ def insert_user_messages(user_id, conversation_id, message):
     cur.close()
     conn.close()
 
+def get_conversations():
+    load_dotenv()
+    conn = psycopg2.connect(
+        host = os.getenv("HOST"),
+        database = os.getenv("DATABASE"),
+        user = os.getenv("USER"),
+        password = os.getenv("PASSWORD")
+    )
+    cur = conn.cursor()
 
+    cur.execute("SET search_path TO efficient_study_database;")
+
+    cur.execute("""
+                SELECT 'user' as sender, conversation_id, created_at, message from user_messages
+                UNION
+                SELECT 'chatbot' as sender, conversation_id, created_at, message from chatbot_messages
+                ORDER BY created_at;
+                """) # Help from ChatGPT
+    
+    conversations = []
+
+    for record in cur:
+        toAdd = (record[1], record[0], record[3])
+        conversations.append(toAdd)
+
+    conn.commit()
+    cur.close()
+    conn.close()
+
+    return conversations
+
+def prompt_template(question, conversation_id):
+    
+    load_dotenv()
+    conn = psycopg2.connect(
+        host = os.getenv("HOST"),
+        database = os.getenv("DATABASE"),
+        user = os.getenv("USER"),
+        password = os.getenv("PASSWORD")
+    )
+    cur = conn.cursor()
+
+    cur.execute("SET search_path TO efficient_study_database;")
+
+    cur.execute("""
+    SELECT message
+    FROM user_messages
+    WHERE conversation_id = %s
+    ORDER BY created_at DESC
+    LIMIT 3
+    """, (conversation_id,))
+
+    last_k_questions = cur.fetchall()
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    
+    prompt = "Answer this question: " + question + "You are only given the following context: " + str(last_k_questions) + "Answer in the manner the user suggests, otherwise answer in a concise and clear manner."
+
+    return prompt
+
+# Initial structure of these methods probably came from ChatGPT but forgot

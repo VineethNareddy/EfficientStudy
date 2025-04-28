@@ -9,3 +9,7 @@ faiss-cpu
 psycopg2-binary
 pymongo
 gridfs
+tiktoken
+requests
+random
+string
