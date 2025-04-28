@@ -185,9 +185,9 @@ def prompt_template(question, conversation_id):
     conn.commit()
     cur.close()
     conn.close()
-    
+
     prompt = "Answer this question: " + question + "You are only given the following context: " + str(last_k_questions) + "Answer in the manner the user suggests, otherwise answer in a concise and clear manner."
 
     return prompt
 
-# Initial structure of these methods probably came from ChatGPT but forgot
+# Initial structure of these methods (opening and closing connection + SQL queries) probably was helped by ChatGPT but forgot

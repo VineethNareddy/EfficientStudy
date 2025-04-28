@@ -87,6 +87,8 @@ span, p, label {color:var(--text);}  /* ensure forms stay bright */
 st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 def generate_llm_response_without_file(openai_api_key, question):
+    if "retriever" not in st.session_state:
+        return "Please input a file as well"
     qa = RetrievalQA.from_chain_type(llm=OpenAI(openai_api_key=openai_api_key), chain_type='stuff', retriever=st.session_state['retriever'])
     prompt = prompt_template(question, st.session_state["conversation_id"])
     return qa.run(prompt)
@@ -142,4 +144,4 @@ if prompt := st.chat_input("What is up?", accept_file=True, file_type="pdf"):
         
     st.session_state.messages.append({"role": "assistant", "content": response})
 
-# A lot of this is from streamlit documentation
+# A lot of this is from streamlit documentation: https://docs.streamlit.io/develop/tutorials/chat-and-llm-apps/build-conversational-apps

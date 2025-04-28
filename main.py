@@ -84,9 +84,7 @@ st.markdown(CUSTOM_CSS, unsafe_allow_html=True)
 
 with st.sidebar:
     st.image("gtlogo.png", use_container_width=True)
-    pdf_file = st.file_uploader("", type="pdf")
-
-
+    # pdf_file = st.file_uploader("", type="pdf")
     st.markdown("---")
 
 def user_form():
