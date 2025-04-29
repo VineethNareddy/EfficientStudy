@@ -1,6 +1,8 @@
 ## Efficient Study
 
-### Goal
+### Goal + Overview
+
+Efficient Study is an app mainly aimed to help GT students study efficiently. Students can insert in course material (textbook, slides) and for every question they answer, our system will generate and an answer that makes it feel like a natural conversation between student and our apps. This app will help a student feel supported in tackling their challenging courses.
 
 Our primary goal for this project is to learn how to work with a vector database; we hope to learn both how to interface with the database and how to integrate it into a larger service. More specifically, we plan to learn how to use Facebook AI Similarity Search (FAISS) in combination with LangChain to create a service that allows a user to upload a document and then ask an AI chatbot questions about the contents of that document. The service vectorizes the contents of the document for more efficient retrieval of the relevant information. This tool would find its user base in students who are reviewing longer documents – with it, they can receive specific answers to their questions based on the content that they have already been learning from.
 
