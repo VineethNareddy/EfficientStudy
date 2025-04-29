@@ -104,12 +104,15 @@ def generate_llm_response(file, openai_api_key, question):
      text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000)
      chunks = text_splitter.create_documents(documents)
      embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
-     vectorDB = FAISS.from_documents(chunks, embeddings)
-     retriever = vectorDB.as_retriever(search_kwargs={"k":1})
-     if retriever not in st.session_state:
-         st.session_state["retriever"] = retriever
+     if "vectorDB" not in st.session_state:
+        vectorDB = FAISS.from_documents(chunks, embeddings)
      else:
-         st.session_state["retriever"] = retriever
+        vectorDB = st.session_state["vectorDB"]
+     
+     if "retriever" not in st.session_state:
+         st.session_state["retriever"] = vectorDB.as_retriever(search_kwargs={"k":1})
+     else:
+         retriever = st.session_state["retriever"]
      
      qa = RetrievalQA.from_chain_type(llm=OpenAI(openai_api_key=openai_api_key), chain_type='stuff', retriever=retriever)
      prompt = prompt_template(question, st.session_state["conversation_id"])
