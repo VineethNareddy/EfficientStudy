@@ -1,8 +1,28 @@
 ## Efficient Study
 
-### Goal
+### Goal + Overview
+
+Efficient Study is an app mainly aimed to help GT students study efficiently. Students can insert in course material (textbook, slides) and for every question they answer, our system will generate and an answer that makes it feel like a natural conversation between student and our apps. This app will help a student feel supported in tackling their challenging courses.
+
+Our primary goal for this project is to learn how to work with a vector database; we hope to learn both how to interface with the database and how to integrate it into a larger service. More specifically, we plan to learn how to use Facebook AI Similarity Search (FAISS) in combination with LangChain to create a service that allows a user to upload a document and then ask an AI chatbot questions about the contents of that document. The service vectorizes the contents of the document for more efficient retrieval of the relevant information. This tool would find its user base in students who are reviewing longer documents – with it, they can receive specific answers to their questions based on the content that they have already been learning from.
 
 ### Data Preparation and Setup
+
+Database Design:
+1. Postgres for storing basic application info (i.e. users, messages, conversations, etc.). You should have both PostgreSQL (https://www.postgresql.org/download/) and PGAdmin (https://www.pgadmin.org/download/) downloaded. We use Postgres v16. Before you start the application, open up PGAdmin and keep it open for the duration of the project.
+2. Mongo for storing documents. Simply use the pymongo library to start using as we have provided in the requirements.txt file.
+3. Vector Databases that help with delivering tailored responses. Simply use the FAISS, LangChain, and OpenAI libraries as we have provided in the requirements.txt file.
+
+We provide an example textbook to use when chatting with the bot ("Designing Data Intensive Applications.pdf")
+
+To populate the database with some sample data, please type `python random_data.py` in the terminal.
+
+![alt text](image-3.png)
+Source: https://medium.com/@ypredofficial/faiss-vector-database-be3a9725172f
+
+Original Architecture Overview (Switch from React to Streamlit not reflected):
+![alt text](image-4.png)
+
 
 ### Application and code
 
@@ -19,17 +39,29 @@ Below are all libraries in the requirements.txt file along with their importance
 9.  `psycopg2-binary`: Library to connect to our PostgreSQL DB
 10. `pymongo`: Library to connect to our MongoDB
 11.  `gridfs`: Used to store files in PostgreSQL DB
+12. `requests`: Allows us to send HTTP requests
+13. `random`: Used when creating sample data
 
 Below are some steps to run our application:
 
 1. `git clone https://github.com/VineethNareddy/EfficientStudy.git`: Use this command to clone the repo in your IDE
 2. `pip install -r requirements.txt`: To install all libraries used in the project. Should take ~5 min if you never installed the libraries in the requirements.txt file before
-3. PostgreSQL installation: Look below
-4. `streamlit run main.py`: To launch our application. Should take a short time before a user can finally interact with our application.
+3. PostgreSQL installation: You should have both PostgreSQL (https://www.postgresql.org/download/) and PGAdmin (https://www.pgadmin.org/download/) downloaded. We use Postgres v16. Before you start the application, open up PGAdmin and keep it open for the duration of the project.
+4. `psql -U {input username} -d {input database name} -f db.sql`: This creates database tables
+5. Create a .env folder and have the following variables: OpenAI API key (you will have to get this by yourself), HOST (localhost), DATABASE (your database name), USER (your username), PASSWORD (your password)
+6. `streamlit run main.py`: To launch our application. Should take a short time before a user can finally interact with our application.
+7. You have to create a username before you continue using the app. Otherwise, this may cause errors
 
 Note: It's best if you run this app with the latest version of Python installed. We're not sure of this, but if you don't have the latest version, any version >= 3.12 should work.
 
 ### Code Documentation and References
 
-
 1. `https://github.com/dataprofessor/langchain-ask-the-doc`: This repo helped our team understand the architecture behind what we are trying to build and serves as a foundation for the backend.
+
+2. `https://docs.streamlit.io/develop/tutorials/chat-and-llm-apps/build-conversational-apps`: This is to help build the chat functionality. We used the code from the Build a ChatGPT-like clone section I believe. We significantly changed the code section after the line "prompt := st.chat_input..." 
+
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+
+Video: https://app.screencastify.com/v3/watch/WE4WJRWGjTE8r5sYcJCI
