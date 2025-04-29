@@ -135,4 +135,4 @@ if __name__ == "__main__":
 
 	pages.run()
 
-# Probably some help from ChatGPT but don't remember where exactly
+# Probably some help from ChatGPT but don't remember where exactly; vast majority of it is human-generated tho
